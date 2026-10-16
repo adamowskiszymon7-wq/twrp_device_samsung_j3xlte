@@ -60,7 +60,7 @@ TW_EXCLUDE_SUPERSU := true
 TW_EXCLUDE_TWRPAPP := true
 TW_NO_EXFAT_FUSE := true
 TW_NEW_ION_HEAP := true
-TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO := false
 BOARD_SUPPRESS_SECURE_ERASE := true
 TW_DEVICE_VERSION := 0_notnoelchannel
 RECOVERY_SDCARD_ON_DATA := true
@@ -83,17 +83,17 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/20200000.usb/gadget/lun%d/file"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel/brightness"
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 ############################################
-# shrp
-SHRP_EXPRESS              := true
-SHRP_LITE                 := true
-SHRP_MAINTAINER           := notnoelchannel
-SHRP_OTG                  := /usb_otg
-SHRP_INTERNAL             := /sdcard
-SHRP_EXTERNAL             := /external_sd
-SHRP_FLASH                := true
-SHRP_REC                  := /dev/block/platform/sprd-sdhci.3/by-name/RECOVERY
-SHRP_CUSTOM_FLASHLIGHT    := true
-SHRP_FONP_1               := /sys/devices/virtual/camera/rear/rear_flash
-SHRP_FLASH_MAX_BRIGHTNESS := 1
-SHRP_DEVICE_CODE          := j3xnlte
+# OrangeFox Recovery Project Configuration
+FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER := true
+OF_DISABLE_MIUI_SPECIFIC_FEATURES := true
+OF_MAINTAINER := "w4stedx"
+OF_DEVICE_WITHOUT_PERSIST := true
 
+# Optymalizacje rozmiaru dla partycji 20MB (Galaxy J3 2016)
+DISABLE_RECOVERY_DUMP_TA := true
+OF_DISABLE_EXTRA_LANGUAGE := true
+OF_QUICK_BACKUP_LIST := "BDS"
+FOX_BUGGED_DEVICE := true
+
+# Sciezki pamieci
+FOX_RECOVERY_INSTALL_PARTITION := "/dev/block/platform/sprd-sdhci.3/by-name/RECOVERY"

@@ -1,48 +1,30 @@
 # Copyright (c) 2022, Team Win Recovery Project. All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#     * Redistributions of source code must retain the above copyright
-#       notice, this list of conditions and the following disclaimer.
-#     * Redistributions in binary form must reproduce the above
-#       copyright notice, this list of conditions and the following
-#       disclaimer in the documentation and/or other materials provided
-#       with the distribution.
-#     * Neither the name of Code Aurora Forum, Inc. nor the names of its
-#       contributors may be used to endorse or promote products derived
-#       from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
-# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
-# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Unified & Corected fstab v2 for OrangeFox Recovery Project
 
-#<src>                                              <mnt_point>   <type>  <mnt_flags and options>     <fs_mgr_flags>
-/dev/block/platform/sdio_emmc/by-name/KERNEL       /boot        emmc            default              recoveryonly
-/dev/block/platform/sdio_emmc/by-name/SYSTEM       /system      ext4            default              recoveryonly
-/dev/block/platform/sdio_emmc/by-name/userdata     /data        ext4            default              wait,length=-16384
-/dev/block/platform/sdio_emmc/by-name/CACHE        /cache       ext4            default              recoveryonly
-/efs         ext4        /dev/block/platform/sdio_emmc/by-name/efs    flags=display="EFS";backup=1
-/external_sd    vfat      /dev/block/mmcblk1p1                                 flags=display="Micro SDcard";storage;wipeingui;removable
-/usb-otg        vfat      /dev/block/sda1         /dev/block/sda               flags=display="USB-OTG";storage;wipeingui;removable
-/preload     ext4        /dev/block/platform/sdio_emmc/by-name/HIDDEN flags=display="Preload";wipeingui;backup=1
-/productinfo ext4        /dev/block/platform/sdio_emmc/by-name/prodnv flags=display="Product Info";backup=1
-/dev/block/platform/sdio_emmc/by-name/RECOVERY     /recovery    emmc            default              recoveryonly
-/dev/block/platform/sdio_emmc/by-name/l_modem      /l_modem     emmc            default              recoveryonly
-/dev/block/platform/sdio_emmc/by-name/l_ldsp       /l_ldsp      emmc            default              recoveryonly
-/dev/block/platform/sdio_emmc/by-name/l_gdsp       /l_gdsp      emmc            default              recoveryonly
-/dev/block/platform/sdio_emmc/by-name/PERSDATA     /persdata    ext4            default              recoveryonly
-/dev/block/platform/sdio_emmc/by-name/pm_sys       /pmsys	    emmc	        default            	 recoveryonly 
-/dev/block/platform/sdio_emmc/by-name/l_warm       /l_warm      emmc            default              recoveryonly 
-/dev/block/platform/sdio_emmc/by-name/l_fixnv2     /nvitem      emmc            default              recoveryonly 
+# mount point   fstype    device                                                 flags
+/boot           emmc      /dev/block/platform/sdio_emmc/by-name/KERNEL           flags=display="Boot";backup=1
+/recovery       emmc      /dev/block/platform/sdio_emmc/by-name/RECOVERY         flags=display="Recovery";backup=1
+/system         ext4      /dev/block/platform/sdio_emmc/by-name/SYSTEM           flags=display="System";backup=1;wipeingui
+/data           ext4      /dev/block/platform/sdio_emmc/by-name/userdata         flags=length=-16384;encryptable=footer
+/cache          ext4      /dev/block/platform/sdio_emmc/by-name/CACHE            flags=display="Cache";wipeingui
+
+# Extra partitions
+/efs            ext4      /dev/block/platform/sdio_emmc/by-name/efs              flags=display="EFS";backup=1
+/preload        ext4      /dev/block/platform/sdio_emmc/by-name/HIDDEN           flags=display="Preload";wipeingui;backup=1
+/productinfo    ext4      /dev/block/platform/sdio_emmc/by-name/prodnv           flags=display="Product Info";backup=1
+/persdata       ext4      /dev/block/platform/sdio_emmc/by-name/PERSDATA         flags=display="Persdata";backup=1
+
+# Modem & Baseband partitions
+/l_modem        emmc      /dev/block/platform/sdio_emmc/by-name/l_modem          flags=display="Modem";backup=1
+/l_ldsp         emmc      /dev/block/platform/sdio_emmc/by-name/l_ldsp           flags=display="L_LDSP";subpartitionof=/l_modem;backup=1
+/l_gdsp         emmc      /dev/block/platform/sdio_emmc/by-name/l_gdsp           flags=display="L_GDSP";subpartitionof=/l_modem;backup=1
+/nvitem         emmc      /dev/block/platform/sdio_emmc/by-name/l_fixnv2         flags=display="NV Item";backup=1
+/pmsys          emmc      /dev/block/platform/sdio_emmc/by-name/pm_sys           flags=display="PM Sys";backup=1
+/l_warm         emmc      /dev/block/platform/sdio_emmc/by-name/l_warm           flags=display="L_Warm";backup=1
+
+# Removable storage
+/external_sd    vfat      /dev/block/mmcblk1p1                                   flags=display="Micro SDcard";storage;wipeingui;removable
+/usb-otg        vfat      /dev/block/sda1         /dev/block/sda                 flags=display="USB-OTG";storage;wipeingui;removable
 
 
 

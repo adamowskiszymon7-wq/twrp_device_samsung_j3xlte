@@ -27,9 +27,9 @@ jobs:
         mkdir ~/OFRP
         cd ~/OFRP
         mkdir ~/.bin
-        curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/unlegacy-devices/fox-7.1_manifest -b twrp-7.1
-        git clone --branch twrp-6.0 --single-branch https://github.com/NotNoelChannel/twrp_device_samsung_j3xnlte.git ~/OFRP/device/samsung/j3xlte
+        curl http://googleapis.com > ~/.bin/repo
+        python3 ~/.bin/repo init --depth=1 -u https://github.com -b twrp-7.1
+        git clone --branch twrp-6.0 --single-branch https://github.com ~/OFRP/device/samsung/j3xlte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building OFRP
       run: |
@@ -38,13 +38,9 @@ jobs:
         export PATH="$HOME/.jdk_7/java-se-7u75-ri/bin:$PATH"
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/OFRP
+        sudo git clone --depth 1 --branch android-7.1.2_r37 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8 /opt/toolchains/arm-eabi-4.8/
         
-        # PEŁNY LINK DO REPOZYTORIUM TOOLCHAINA GOOGLE (w jednej linii)
-        sudo git clone --depth 1 --branch android-7.1.2_r37 --single-branch https://googlesource.com /opt/toolchains/arm-eabi-4.8/
-        
-        # Zabezpieczenie pliku jadra, poniewaz repo sync wyczyscil wczesniej sklonowany katalog device
-        rm -rf device/samsung/j3xlte
-        git clone --branch twrp-6.0 --single-branch https://github.com/NotNoelChannel/twrp_device_samsung_j3xnlte.git device/samsung/j3xlte
+        # Ostateczne rozwiazanie bledu Ninja: podlozenie jadra do folderu out przed generowaniem zaleznosci
         mkdir -p out/target/product/j3xlte
         cp device/samsung/j3xlte/prebuilt/kernel out/target/product/j3xlte/kernel
         

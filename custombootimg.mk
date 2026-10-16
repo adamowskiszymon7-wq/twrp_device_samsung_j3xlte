@@ -1,5 +1,9 @@
 LZMA_BIN := $(shell which lzma)
 
+# Wymuszenie skopiowania gotowego jądra (prebuilt kernel) do folderu wyjściowego out
+$(PRODUCT_OUT)/kernel: device/samsung/j3xlte/prebuilt/kernel
+	@echo -e "--- Copying prebuilt kernel to output directory ---"
+	$(hide) cp device/samsung/j3xlte/prebuilt/kernel $(PRODUCT_OUT)/kernel
 
 $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) \
 		$(recovery_ramdisk) \
@@ -19,7 +23,7 @@ LZMA_BOOT_RAMDISK := $(PRODUCT_OUT)/ramdisk-lzma.img
 $(LZMA_BOOT_RAMDISK): $(BUILT_RAMDISK_TARGET)
 	gunzip -f < $(BUILT_RAMDISK_TARGET) | lzma -e > $@
 
- $(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES) $(LZMA_BOOT_RAMDISK)
+$(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES) $(LZMA_BOOT_RAMDISK) $(PRODUCT_OUT)/kernel
 	$(call pretty,"Target boot image: $@")
 	$(hide) $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@ --ramdisk $(LZMA_BOOT_RAMDISK)
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_BOOTIMAGE_PARTITION_SIZE),raw)

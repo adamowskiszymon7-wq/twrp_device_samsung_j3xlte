@@ -47,6 +47,10 @@ jobs:
         
         source build/envsetup.sh
         sed -i 's/except IOError, ES.ParseError:/except (IOError, ES.ParseError):/g' build/tools/roomservice.py
+        
+        # Automatyczna konwersja starego zapisu 'print' do formatu Python 3 (Rozwiazanie bledu z linii 7181)
+        sed -i 's/print "\*\*\* Error verifying %s.*"/print(f"*** Error verifying {fn}")/g' build/tools/check_repo_versions.py
+        
         export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
         export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
         export ALLOW_MISSING_DEPENDENCIES=true

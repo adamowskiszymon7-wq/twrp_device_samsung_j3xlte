@@ -30,19 +30,17 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := cortex-a7
 
+# Kernel Configuration
 BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8 androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := zImage
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
-TARGET_KERNEL_CONFIG := j3xlte_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/sharkls
-KERNEL_TOOLCHAIN := /opt/toolchains/arm-eabi-4.8/bin
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 
-# Wskazanie gotowego pliku jądra oraz aktywacja skryptu custombootimg.mk
+# Wymuszenie użycia gotowego jądra i całkowite wyłączenie kompilacji ze źródeł
 TARGET_PREBUILT_KERNEL := device/samsung/j3xlte/prebuilt/kernel
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/j3xlte/custombootimg.mk
+TARGET_NO_KERNEL := true
 
 BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
 
@@ -57,6 +55,7 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+
 # TWRP
 TW_THEME := portrait_hdpi
 TW_EXCLUDE_SUPERSU := true
@@ -69,11 +68,13 @@ TW_DEVICE_VERSION := 0_notnoelchannel
 RECOVERY_SDCARD_ON_DATA := true
 TW_NO_REBOOT_BOOTLOADER := true
 TW_HAS_DOWNLOAD_MODE := true
+
 # Paths
 TARGET_RECOVERY_DEVICE_DIRS := device/samsung/j3xlte
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := device/samsung/j3xlte/recovery/recovery_keys.c
 BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_FSTAB := device/samsung/j3xlte/recovery/recovery.fstab
+
 ################################################
 # display
 TW_MAX_BRIGHTNESS := 255
@@ -85,6 +86,7 @@ TW_MTP_DEVICE := "/dev/mtp_usb"
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/20200000.usb/gadget/lun%d/file"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel/brightness"
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
+
 ############################################
 # OrangeFox Recovery Project Configuration
 FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER := true

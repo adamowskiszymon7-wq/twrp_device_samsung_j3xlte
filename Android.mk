@@ -26,6 +26,9 @@ ifneq ($(filter j3xlte,$(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 
+# Ręczne wymuszenie skopiowania jądra do folderu wyjściowego na samym początku wczytywania drzewa
+$(shell mkdir -p $(PRODUCT_OUT) && cp $(LOCAL_PATH)/prebuilt/kernel $(PRODUCT_OUT)/kernel)
+
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
 endif

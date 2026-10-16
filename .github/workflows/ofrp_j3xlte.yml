@@ -29,8 +29,9 @@ jobs:
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
         python3 ~/.bin/repo init --depth=1 -u https://github.com/unlegacy-devices/fox-7.1_manifest -b twrp-7.1
-        git clone --branch twrp-6.0 --single-branch https://github.com/NotNoelChannel/twrp_device_samsung_j3xnlte.git ~/OFRP/device/samsung/j3xlte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
+        # Klonowanie drzewa urzadzenia PO wykonaniu repo sync, aby uniknac wyczyszczenia plikow
+        git clone --branch twrp-6.0 --single-branch https://github.com/NotNoelChannel/twrp_device_samsung_j3xnlte.git ~/OFRP/device/samsung/j3xlte
     - name: Building OFRP
       run: |
         OLDPATH=$PATH
@@ -39,8 +40,13 @@ jobs:
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/OFRP
         sudo git clone --depth 1 --branch android-7.1.2_r37 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8 /opt/toolchains/arm-eabi-4.8/
+        
+        # Ostateczne rozwiazanie bledu Ninja: podlozenie jadra do folderu out przed generowaniem zaleznosci
+        mkdir -p out/target/product/j3xlte
+        cp device/samsung/j3xlte/prebuilt/kernel out/target/product/j3xlte/kernel
+        
         source build/envsetup.sh
-                sed -i 's/except IOError, ES.ParseError:/except (IOError, ES.ParseError):/g' build/tools/roomservice.py
+        sed -i 's/except IOError, ES.ParseError:/except (IOError, ES.ParseError):/g' build/tools/roomservice.py
         export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
         export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
         export ALLOW_MISSING_DEPENDENCIES=true

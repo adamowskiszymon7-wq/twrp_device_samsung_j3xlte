@@ -25,8 +25,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
 
-PRODUCT_NAME := omni_j3xlte
+$(call inherit-product, device/samsung/j3xlte/device.mk)
+
+PRODUCT_NAME := fox_j3xlte
 PRODUCT_DEVICE := j3xlte
 PRODUCT_BRAND := Samsung
 PRODUCT_MODEL := Samsung Galaxy J3 (2016)
 PRODUCT_MANUFACTURER := Samsung
+
+FOX_VERSION := "R10.1"
+OF_MAINTAINER := "w4stedx"
+FOX_BUILD_TYPE := Unofficial

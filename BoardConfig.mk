@@ -40,7 +40,7 @@ TARGET_KERNEL_SOURCE := kernel/samsung/sharkls
 KERNEL_TOOLCHAIN := /opt/toolchains/arm-eabi-4.8/bin
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/j3xlte/custombootimg.mk
+# BOARD_CUSTOM_BOOTIMG_MK := device/samsung/j3xlte/custombootimg.mk
 BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
 
 BOARD_BOOTIMAGE_PARTITION_SIZE := 20971520

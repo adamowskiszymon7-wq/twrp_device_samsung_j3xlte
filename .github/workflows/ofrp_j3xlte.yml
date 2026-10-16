@@ -27,7 +27,9 @@ jobs:
         mkdir ~/OFRP
         cd ~/OFRP
         mkdir ~/.bin
-        curl http://googleapis.com > ~/.bin/repo
+        # POPRAWIONY ADRES URL DO REPO (użycie bezpiecznego HTTPS i aktualnej domeny Google)
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+        chmod a+rx ~/.bin/repo
         python3 ~/.bin/repo init --depth=1 -u https://github.com -b twrp-7.1
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
         # Klonowanie drzewa urzadzenia PO wykonaniu repo sync, aby uniknac wyczyszczenia plikow

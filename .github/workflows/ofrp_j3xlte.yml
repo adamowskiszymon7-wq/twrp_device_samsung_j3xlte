@@ -16,7 +16,7 @@ jobs:
     - name: Installing JDK 7 + Build Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libncurses5 axel python3 wget
+        sudo apt-get install -y gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libncurses5 axel python3 repo
     - name: Install OpenJDK
       uses: actions/setup-java@v3
       with:
@@ -27,8 +27,8 @@ jobs:
         mkdir ~/OFRP
         cd ~/OFRP
         mkdir ~/.bin
-        # NIEZAWODNE POBIERANIE SKRYPTU REPO PRZEZ WGET Z CODENAME/LINEAGEOS
-        wget --no-check-certificate https://githubusercontent.com -O ~/.bin/repo
+        # Kopiowanie oficjalnego repo zainstalowanego z pakietów systemowych Ubuntu
+        cp /usr/bin/repo ~/.bin/repo
         chmod a+rx ~/.bin/repo
         python3 ~/.bin/repo init --depth=1 -u https://github.com -b twrp-7.1
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)

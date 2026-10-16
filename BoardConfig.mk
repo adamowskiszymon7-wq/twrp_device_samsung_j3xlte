@@ -37,10 +37,10 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 
-# Wymuszenie użycia gotowego jądra i całkowite wyłączenie kompilacji ze źródeł
+# Wskazanie gotowego jądra (naprawa błędu Ninja missing kernel rule)
 TARGET_PREBUILT_KERNEL := device/samsung/j3xlte/prebuilt/kernel
+BOARD_PREBUILT_KERNEL := device/samsung/j3xlte/prebuilt/kernel
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/j3xlte/custombootimg.mk
-TARGET_NO_KERNEL := true
 
 BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
 

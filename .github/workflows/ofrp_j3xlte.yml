@@ -27,12 +27,10 @@ jobs:
         mkdir ~/OFRP
         cd ~/OFRP
         mkdir ~/.bin
-        # Przywrócony oryginalny kod pobierania narzędzia repo, który działał na początku
-        curl http://googleapis.com > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com -b twrp-7.1
+        curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/unlegacy-devices/fox-7.1_manifest -b twrp-7.1
+        git clone --branch twrp-6.0 --single-branch https://github.com/NotNoelChannel/twrp_device_samsung_j3xnlte.git ~/OFRP/device/samsung/j3xlte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
-        # Klonowanie drzewa urzadzenia PO wykonaniu repo sync, aby uniknac wyczyszczenia plikow
-        git clone --branch twrp-6.0 --single-branch https://github.com ~/OFRP/device/samsung/j3xlte
     - name: Building OFRP
       run: |
         OLDPATH=$PATH
@@ -42,7 +40,9 @@ jobs:
         cd ~/OFRP
         sudo git clone --depth 1 --branch android-7.1.2_r37 --single-branch https://googlesource.com /opt/toolchains/arm-eabi-4.8/
         
-        # Ostateczne rozwiazanie bledu Ninja: podlozenie jadra do folderu out przed generowaniem zaleznosci
+        # Ponowne dociagniecie drzewa i zabezpieczenie pliku jadra, poniewaz repo sync wyczyscil ten katalog
+        rm -rf device/samsung/j3xlte
+        git clone --branch twrp-6.0 --single-branch https://github.com/NotNoelChannel/twrp_device_samsung_j3xnlte.git device/samsung/j3xlte
         mkdir -p out/target/product/j3xlte
         cp device/samsung/j3xlte/prebuilt/kernel out/target/product/j3xlte/kernel
         
